@@ -39,12 +39,12 @@ export class BcbProcessImage extends LitElement {
   style="max-width:300px;max-height:300px"
   id="postDisplay"
   />
-
+    <br />
   <input
   type="file"
   name="file"
   id="file"
-  @input="${(e) => this.processFile( e ) }"
+  @change="${(e) => this.processFile( this.shadowRoot.querySelector('input') ) }"
   />
     `;
   }
@@ -59,7 +59,8 @@ export class BcbProcessImage extends LitElement {
       this.height = postDisplay.clientHeight;
       this.sendEvent();
     };
-    reader.readAsDataURL( e.path[0].files[0] );
+    console.log(e);
+    reader.readAsDataURL( e.files[0] );
   }
 
   sendEvent() {

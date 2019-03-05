@@ -15,6 +15,8 @@ img{
   border-radius: 4px;
   max-width:75px;
   max-height:75px;
+  margin: 0 auto;
+  align-self:center;
 }
 
 img:hover{
@@ -29,9 +31,14 @@ textarea{
   color: inherit;
   height: 75px;
   margin: 5px 7px;
-  width:350px;
+  width:250px;
+  outline:none;
 }
 
+.data{
+  margin: 0 auto;
+  align-self:center;
+}
 
 </style>
 `

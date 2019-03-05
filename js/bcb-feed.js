@@ -16,37 +16,44 @@ export class BcbFeed extends LitElement {
     this.socket = io.connect( 'localhost:5000/' );
     this.socket.on( 'newPost', ( e ) => {
       const data = e.data;
-      console.log( data );
+      const currentUser = e.currentUser;
       const myhtml = html`
         <div style="
-                width:500px;
-                min-height:100px;
-                border: 1px solid #000;
-                padding-top:5px;
-                margin:10px auto;
-                border-radius:10px">
-          <h2>
+                        width:100%;
+                        min-height:100px;
+                        border: 1px solid #000;
+                        padding-top:5px;
+                        margin:10px auto;
+                        border-radius:10px;
+                        display:flex;
+                        flex-direction:row;
+                        overflow:hidden;
+                        padding:10px;
+                        justify-content:center;
+                        ">
+          <img src="${data.postImage }">
+        <div class="data">
+        <h2>
             ${data.poster } |
             ${data.postTitle }
           </h2>
-          <textarea
-          name="postText"
-          id="postText"
-          placeholder="What's going on?"
-          >${data.postText }</textarea>
+          <textarea readonly name="postText" id="postText" placeholder="What's going on?">${data.postText }</textarea>
           <br />
           <center>
-            <img
-            src="${data.postImage }"
-            id="${ data.post_id }"
-            data-user="${ data.user_id }" />
-          </center>
-          <br /><br />
+
+            <br />
+            ${data.user_id === currentUser ? html`
+            <button @click="${( e ) => this.editPost( data ) }">Edit</button>
+            <button @click="${( e ) => this.deletePost( data ) }">Delete</button>
+            <br>
+            <br>
+            ` : '' }
+        </div>
         </div>
       `;
-      this.posts = [myhtml, ...this.posts];
+      this.posts = [...this.posts.reverse(), myhtml].reverse();
     } );
-    this.socket.on( 'del', ( data ) => {
+    this.socket.on( 'dele', ( data ) => {
       this.posts = [];
       this.socket.emit( 'loadPosts' );
     } );
@@ -60,6 +67,15 @@ export class BcbFeed extends LitElement {
     ${this.posts }
   </div>
     `;
+  }
+
+  editPost( e ) {
+    const form = document.querySelector( 'bcb-post-form' );
+    form.setAttribute( 'data', JSON.stringify( e ) );
+  }
+
+  deletePost( e ) {
+    this.socket.emit( 'dele', e.post_id );
   }
 }
 

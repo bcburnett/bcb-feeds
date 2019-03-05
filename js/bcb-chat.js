@@ -42,17 +42,26 @@ export class BcbChat extends LitElement {
         label="Chat Here"
         width="350px"
         type="text"
-        @change="${(e)=>this.doChat(e)}"
+        @change="${(e)=>this.doChat(e, this)}"
+        placeholder="Say Something"
         />
   </div>
     `;
   }
 
-  doChat(e) {
-    const value =e.path[0].value;
-    if (!value) return;
-    this.socket.emit('hello', value);
-    e.path[0].value = '';
+  doChat(e, f) {
+    console.log(e, f);
+    let value;
+    if (e.path) {
+      value =e.path[0];
+    }
+    if (e.explicitOriginalTarget) {
+      value= e.explicitOriginalTarget;
+    }
+    const value1 =value.value;
+    if (!value1) return;
+    this.socket.emit('hello', value1);
+    value.value = '';
   }
 }
 

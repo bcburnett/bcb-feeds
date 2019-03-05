@@ -7,11 +7,8 @@ export const Styles = html`
 :host{
 margin:0;
 font-size:1rem;
+background-color:dodgerblue;
 }
 
-input{
-  color:transparent;
-  width:100px;
-}
 </style>
 `

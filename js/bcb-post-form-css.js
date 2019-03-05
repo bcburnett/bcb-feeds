@@ -7,11 +7,12 @@ export const Styles = html`
 :host{
 margin:0;
 font-size:1rem;
+margin-top:15px;
 }
 
 .wrapper{
   border: 1px solid #000;
-  width:400px;
+  width:350px;
   margin:10px auto;
   border-radius:10px;
   padding:5px;
@@ -22,6 +23,10 @@ input, textarea{
   border: 1px solid black;
   border-radius: 3px;
   color: inherit;
+}
+
+textarea{
+  width:250px;
 }
 
 button{
